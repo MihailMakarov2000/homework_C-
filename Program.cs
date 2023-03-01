@@ -1,14 +1,17 @@
-﻿Console.WriteLine("5");
-int namber_A = Convert.ToInt32(Console.ReadLine());
+﻿Console.WriteLine("Введите 3 числа:2,3,7");
+int num_1 = Convert.ToInt32(Console.ReadLine());
+int num_2 = Convert.ToInt32(Console.ReadLine());
+int num_3 = Convert.ToInt32(Console.ReadLine());
 
-Console.WriteLine("7");
-int namber_B = Convert.ToInt32(Console.ReadLine());
+int max = num_2;
 
-if (namber_A > namber_B)
+if (num_2 > max)
 {
-    Console.WriteLine("Первое число" + namber_A + "больше чем второе" + namber_B);
+    max = num_2;
 }
-else
+
+if (num_3 > max)
 {
-    Console.WriteLine("Второе число" + namber_B + "больше чем второе" + namber_A);
+    max = num_3;
 }
+Console.WriteLine("Наибольшее из введённых чисел -> " + max);
