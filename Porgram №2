@@ -1,0 +1,259 @@
+// Напишите программу, которая принимает на вход число (А) и выдаёт сумму чисел от 1 до А. (Работает).
+// 7 -> 28
+// 4 -> 10
+// 8 -> 36
+
+int ReadIntNamber(string messgeToUser)
+{
+    Console.WriteLine(messgeToUser);
+    return Convert.ToInt32(Console.ReadLine());
+}
+
+int SumFrom1ToA(int a)
+{
+    int sum = 0;
+
+    for(int i = 1; i <= a; i++)
+    {
+        sum = sum + i;
+        sum += i;
+    }
+    
+    return sum;
+}
+
+
+int number = ReadIntNamber("Введите переменную A");
+int number1 = ReadIntNamber("Введите переменную number1");
+int result = SumFrom1ToA(number);
+int result1 = SumFrom1ToA(number1);
+Console.WriteLine($"Сумма чисел от 1 до {number} = {number1}");
+
+// Напишите программу, которая принимает на вход число и выдаёт количество цифр в числе. (Работает)
+// 456 -> 3
+// 78 -> 2
+// 89126 -> 5
+
+Console.Write("Enter the integer number: ");
+
+bool isParsed = int.TryParse(Console.ReadLine(), out int number); 
+
+if(!isParsed)
+{
+    Console.WriteLine("Incorrect number");
+    return;
+}
+
+int res = GetNumberOfDigitsInNumber(number);
+
+Console.WriteLine($"Number of digit in the input number {res}");
+
+int GetNumberOfDigitsInNumber(int number)
+{
+    int count = 1;             // сount = 1, т.к. любое число имеет хотя бы 1 цифру
+    if (number < 0)
+    {
+        number = number * (-1);// если отрицательное число
+    }
+    while (number >= 10)
+    {
+        number = number / 10;
+        count++;
+
+    }
+    return count;
+}
+
+// Напишите программу, которая принимает на вход число N и выдаёт произведение чисел от 1 до N. (Работает)
+// 4 -> 24
+// 5 -> 120
+
+int ReadIntNamber(string messgeToUser)
+{
+    Console.WriteLine(messgeToUser);
+    return Convert.ToInt32(Console.ReadLine());
+}
+
+int SumFrom1ToA(int a)
+{
+    int sum = 1;
+
+    for(int i = 1; i <= a; i++)
+    {
+        sum = sum * i;
+        sum += i;
+    }
+    
+    return sum;
+}
+
+
+int number = ReadIntNamber("Введите переменную A");
+int result = SumFrom1ToA(number);
+Console.WriteLine($"Сумма чисел от 1 до {number} = {result}");
+
+/// Напишите программу, которая выводит массив из 8 элементов, заполненный нулями и единицами в случайном порядке. (Работает)
+/// [1,0,1,1,0,1,0,0]
+
+/*int[] arr = new int[8];
+for (int i = 0; i < arr.Length; i++)
+{
+    Random random = new Random();         
+    arr[i] = new Random().Next(0, 2);      
+}                                         
+ for (int i = 0; i < arr.Length; i++)         
+ {                                          
+     Console.Write(arr[i] + " ");
+ }*/
+
+
+
+
+/*
+bool isInt = int.TryParse(Console.ReadLine(), out int num);
+if (!isInt)
+{
+    Console.WriteLine("incorrect number entered");
+}
+else
+{
+    int userLength = num;
+int [] userArray = ArrayFilling(userLength);
+PrintArr(userArray);
+int[] ArrayFilling(int userLength)
+{
+    Random random = new Random();
+    int[] arr = new int[userLength];
+    for(int i=0; i < arr.Length; i++)
+    {
+        arr[i] = random.Next(0,2);
+    }
+    return arr;
+}
+void PrintArr(int[] array)
+{
+    for(int i = 0; i < array.Length; i++)
+    {
+        Console.Write($"{array[i]} ");
+    }
+    Console.WriteLine();
+}
+}*/
+
+int[] CreateArray(int l, int min, int max)
+{
+    int[] arr = new int[l];
+    for (int i = 0; i < arr.Length; i++)
+    {
+        arr[i] = new Random().Next(min, max);
+    }
+    return arr;
+}
+int[] result = CreateArray(8, 0, 2);
+
+void PrintArray(int[] arr)
+{
+    for (int i = 0; i < arr.Length; i++)
+    {
+        Console.Write(arr[i] + " ");
+    }
+}
+
+PrintArray(result);
+
+// Напишите цикл, который принимает на вход два числа (A и B) и возводит число A в натуральную степень B. (Работает)
+
+// 3, 5 -> 243 (3⁵)
+
+// 2, 4 -> 16
+
+int numberA = ReadInt("Введите число A: ");
+int numberB = ReadInt("Введите число B: ");
+ToDegree(numberA, numberB);
+
+
+// Функция возведения в степень
+void ToDegree(int a, int b)
+{
+    int result = 1;
+    for (int i = 1; i <= b; i++)
+    {
+        result = result * a;
+    }
+    Console.WriteLine(result);
+}
+
+int ReadInt(string message)
+{
+    Console.WriteLine(message);
+    return Convert.ToInt32(Console.ReadLine());
+}
+
+
+// Напишите программу, которая принимает на вход число и выдаёт сумму цифр в числе. (Работает)
+
+// 452 -> 11
+// 82 -> 10
+// 9012 -> 12
+
+int Pormpt(string message)
+{
+    System.Console.WriteLine(message);
+    string readInput = System.Console.ReadLine();
+    int result = int.Parse(readInput);
+    return result;
+}
+
+int SumAllDiqit(int number)
+{
+    int result = 0;
+    while (number > 0)
+    {
+        result += number % 10;
+        number = number / 10;
+    }
+    return result;
+}
+
+int number = Pormpt("Введите число:");
+System.Console.WriteLine($"Сумма всех чисел в цифре {number} = {SumAllDiqit(number)}");
+
+// Напишите программу, которая задаёт массив из 8 элементов и выводит их на экран. Данные вводятся с консоли пользователем. (Работает)
+// 1, 2, 5, 7, 19, 6, 1, 33 -> [1, 2, 5, 7, 19, 6, 1, 33]
+
+int Pormpt(string message)
+{
+    System.Console.Write(message);
+    string readInput = System.Console.ReadLine();
+    int result = int.Parse(readInput);
+    return result;
+
+}
+
+int[] GenerateArray(int Length, int minValue, int maxValue)
+{
+    int[] array = new int[Length];
+    Random random = new Random();
+    for (int i = 0; i < Length; i++)
+    {
+        array[i] = random.Next(minValue, maxValue + 1);
+    }
+    return array;
+}
+
+void PrintArray(int[] array)
+{
+    System.Console.WriteLine("[");
+    for (int i = 0; i < array.Length - 1; i++)
+    {
+        System.Console.Write($"{array[i]}, ");
+    }
+    System.Console.Write($"{array[array.Length - 1]}");
+    System.Console.WriteLine("]");
+}
+
+int Length = Pormpt("Длинна масива: ");
+int min = Pormpt("Начальное значение, для диапазона случайного числа: ");
+int max = Pormpt("Конечное значение, для диапазона случайного числа:");
+int[] array = GenerateArray(Length, min, max);
+PrintArray(array);
