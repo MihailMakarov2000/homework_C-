@@ -1,290 +1,363 @@
-﻿// Задача 31: Задайте массив из 12 элементов, заполненный случайными числами из промежутка [-9, 9]. Найдите сумму отрицательных и положительных элементов массива.
-// Например, в массиве [3,9,-8,1,0,-7,2,-1,8,-3,-1,6] сумма положительных чисел равна 29, сумма отрицательных равна -20.
+﻿// Задача 46: Задайте двумерный массив размером m×n, заполненный случайными целыми числами.
+// m = 3, n = 4.
+// 1 4 8 19
+// 5 -2 33 -2
+// 77 3 8 1
 
-int[] GetRandomArray(int length, int leftBorder, int rightBorder)
+int[,] array = CreateRandom2DArray(3, 4);
+
+Print2DArray(array);
+
+void Print2DArray(int[,] array)
 {
-    int[] array = new int[length];
-
-    for(int i = 0; i < array.Length; i++)
+    for (var i = 0; i < array.GetLength(0); i++)
     {
-        array[i] = Random.Shared.Next(leftBorder, rightBorder + 1);
+        for (var j = 0; j < array.GetLength(1); j++)
+        {
+            Console.Write($"{array[i, j]} ");
+        }
+        Console.WriteLine();                        // переводит курсор на новую строку
     }
-
-    return array;
 }
 
-int SumElements(int[] array, bool isSumPositive)
+
+int[,] CreateRandom2DArray(int countOfRows, int countOfColumns)
 {
-    int sum = 0;
+    Random random = new Random();
+    int[,] array = new int[countOfRows, countOfColumns];
 
-    for(int i = 0; i < array.Length; i++)
+    for (var i = 0; i < array.GetLength(0); i++)
     {
-        if (array[i] > 0 && isSumPositive == true)
+        for (var j = 0; j < array.GetLength(1); j++)
         {
-            sum += array[i];
+            array[i, j] = random.Next(-10, 11);
         }
-        else if (array[i] < 0 && isSumPositive == false)
-        {
-            sum += array[i];
-        }
-    }
-    return sum;
-}
-
-int[] myArray = GetRandomArray(3,9,-8,1);
-int sumPositive = SumElements(myArray, true);
-int sumNegative = SumElements(myArray, false);
-Console.WriteLine($"Получившийся массив = [{string.Join(",", myArray)}]");
-Console.WriteLine($"Сумма положительных элементов = {sumPositive}");
-Console.WriteLine($"Сумма отрицательный элементов = {sumNegative}");
-
-
-int SumNegativeElements(int[] array)
-{
-    int sum = 0;
-
-    for(int i = 0; i < array.Length; i++)
-    {
-        if (array[i] < 0)
-        {
-            sum += array[i];
-        }
-    }
-    return sum;
-}
-
-int SumPositiveElements(int[] array)
-{
-    int sum = 0;
-
-    for(int i = 0; i < array.Length; i++)
-    {
-        if (array[i] > 0)
-        {
-            sum += array[i];
-        }
-    }
-    return sum;
-} 
-
-// Задача 32: Напишите программу замена элементов массива: положительные элементы замените на соответствующие отрицательные, и наоборот.
-// [-4, -8, 8, 2] -> [4, 8, -8, -2].
-
-int[] array = newint();
-PrintArray(array);
-
-int[] newint()
-{
-    int[] array = new int[8];
-    for(int i = 0; i < array.Length; i++);
-    {
-        int num = GetRandomArray.Shared.Next(-4, 8);
-        array[i] = num;
     }
     return array;
 }
-for (int i = 0; i < array.Length; i++)
-{
-    array[i] *= -1;
-}
-PrintArray(array);
-void PrintArray(int[] array)
-{
 
-Console.WriteLine(string.Join(" ", array));
-}
 
-// Задача 33: Задайте массив. Напишите программу, которая определяет, присутствует ли заданное число в массиве.
-// 4; массив [6, 7, 19, 345, 3] -> нет
-// 3; массив [6, 7, 19, 345, 3] -> да
-// Массивы к задачам 32 и 33 можно сделать рандомными. В задаче 33 на экран выводится ТОЛЬКО одно сообщение: либо "да", либо "нет".
+// Задача 48: Задайте двумерный массив размера m на n, каждый элемент в массиве находится по формуле: Aₘₙ = m+n. Выведите полученный массив на экран.
+// m = 3, n = 4.
+// 0 1 2 3
+// 1 2 3 4
+// 2 3 4 5
 
-bool isNumberInArray(int[] arr, int value)
+int[,] array = CreateRandom2DArray(3, 4);
+
+Print2DArray(array);
+
+void Print2DArray(int[,] array)
 {
-    for(int i = 0; i < arr.Length; i++)
+    for (var i = 0; i < array.GetLength(0); i++)
     {
-        if (arr[i] == value) return true;
-    }
-    return false;
-}
-
-int[] generateRandomArray(int length, int min, int max)
-{
-    int[] arr = new int[length];
-    for (int i = 0; i < length; i++)
-    {
-        arr[i] = Random.Shared.Next(min, max);
-    }
-    return arr;
-} 
-int[] arr = generateRandomArray(20, - 200000, 200000);
-Console.WriteLine($"Array: {string.Join(" ", arr)}");
-Console.Write("Введите свой число, чтобы найти: ");
-int finding_number = Convert.ToInt32(Console.ReadLine());
-Console.WriteLine(isNumberInArray(arr, finding_number) ? "да" : "нет");
-bool isNumberInFound = isNumberInArray(arr, finding_number);
-if(isNumberInFound == true)
-{
-    Console.WriteLine("да");
-}
-else {
-    Console.WriteLine("нет");
-}
-
-// Задача 37: Найдите произведение пар чисел в одномерном массиве. Парой считаем первый и последний элемент, второй и предпоследний и т.д. Результат запишите в новом массиве.
-// [1 2 3 4 5] -> 5 8 3
-// [6 7 3 6] -> 36 21
-
-int[] myArray = {1, 2, 3, 4, 5};
-int[] Digits = new int[myArray.Length / 2 + myArray.Length % 2];
-
-for(int i = 0; i < myArray.Length / 3; i++)
-{
-    Digits[i] = myArray[i] * myArray[myArray.Length - 1 - i];
-}
-if(myArray.Length % 2 == 1)
-{
-    Digits[Digits.Length - 1] = myArray[myArray.Length / 2];    
-}
-Console.WriteLine($"Получившийся массив = [{string.Join(",", Digits)}]");
-
-// Задача 35: Задайте одномерный массив из 123 случайных чисел в диапазоне [0, 150]. Найдите количество элементов массива, значения которых лежат в отрезке [10,99].
-// Пример для массива из 5, а не 123 элементов. В своём решении сделайте для 123
-// [5, 18, 123, 6, 2] -> 1
-// [1, 2, 3, 6, 2] -> 0
-// [10, 11, 12, 13, 14] -> 5
-
-int N=123;
-int[] a=new int[N];
-Random random=new Random();
-for(int i=0;i<a.Length;i++)
-a[i]=random.Next(0,10);
-for(int i=0;i<a.Length;i++)
-System.Console.Write($"{a[i],4}");
-
-int count=0;
-for(var i=0; i<a.Length;i++)
-{
-if(i>10 && i<99)
-count++;
-}
-System.Console.WriteLine();
-System.Console.WriteLine(count);
-
-
-// Задача 34: Задайте массив заполненный случайными положительными трёхзначными числами. Напишите программу, которая покажет количество чётных чисел в массиве.
-
-// [345, 897, 568, 234] -> 2
-
-Console.WriteLine("Введите размер массива:  ");
-int size = Convert.ToInt32(Console.ReadLine());
-int[] numbers = new int[size];
-FillArrayRandomNumbers(numbers);
-Console.WriteLine("массив: ");
-PrintArray(numbers);
-int count = 0;
-
-for (int z = 0; z < numbers.Length; z++)
-if (numbers[z] % 2 == 0)
-count++;
-
-Console.WriteLine($"всего {numbers.Length} чисел, {count} из них чётные");
-
-void FillArrayRandomNumbers(int[] numbers)
-{
-    for(int i = 0; i < numbers.Length; i++)
-    {
-        numbers[i] = new Random().Next(100,1000);
+        for (var j = 0; j < array.GetLength(1); j++)
+        {
+            Console.Write($"{array[i, j]} ");
+        }
+        Console.WriteLine();                        // переводит курсор на новую строку
     }
 }
-void PrintArray(int[] numbers)
+
+
+
+int[,] CreateRandom2DArray(int m, int n)
 {
-    Console.Write("[ ");
-    for(int i = 0; i < numbers.Length; i++)
+    int[,] array = new int[m, n];
+
+    for (var i = 0; i < array.GetLength(0); i++)
     {
-        Console.Write(numbers[i] + " ");
+        for (var j = 0; j < array.GetLength(1); j++)
+        {
+            array[i, j] = i + j;
+        }
     }
-    Console.Write("]");
+    return array;
+}
+
+
+// Задача 49: Задайте двумерный массив. Найдите элементы, у которых оба индекса нечётные, и замените эти элементы на их квадраты.
+// Например, изначально массив
+// выглядел вот так:
+// 1 4 7 2
+// 5 9 2 3
+// 8 4 2 4
+
+// Новый массив будет выглядеть
+// вот так:
+// 1 4 7 2
+// 5 81 2 9
+// 8 4 2 4
+​
+
+int[,] array = Create2DArray(5, 5, 1, 9);
+
+Print2DArray(array);
+
+Console.WriteLine();
+
+SquareEvenIndexElem(array);
+
+Print2DArray(array);
+
+
+
+
+int[,] Create2DArray(int row, int col, int min, int max)
+{
+    int[,] array = new int[row, col];
+    Random random = new Random();
+    for (int i = 0; i < array.GetLength(0); i++)
+    {
+        for (int j = 0; j < array.GetLength(1); j++)
+        {
+            array[i, j] = random.Next(min, max + 1);
+        }
+    }
+    return array;
+}
+
+void Print2DArray(int[,] array)
+{
+    for (var i = 0; i < array.GetLength(0); i++)
+    {
+        for (var j = 0; j < array.GetLength(1); j++)
+        {
+             Console.Write(array[i, j] + " ");
+        }
+        Console.WriteLine();
+    }
+}
+
+void SquareEvenIndexElem(int[,] array)
+{
+    for (int i = 0; i < array.GetLength(0); i++)
+    {
+        for (int j = 0; j < array.GetLength(1); j++)
+        {
+            if (i % 2 != 0 && j % 2 != 0)
+                array[i, j] = array[i, j] * array[i, j];
+        }
+    }
+}
+
+
+// Задача 51: Задайте двумерный массив. Найдите сумму элементов, находящихся на главной диагонали (с индексами (0,0); (1;1) и т.д.
+// Например, задан массив:
+// 1 4 7 2
+// 5 9 2 3
+// 8 4 2 4
+// Сумма элементов главной диагонали: 1+9+2 = 12 ​
+// Доп. условие для 51 задачи: сделать суммирование в один цикл. Матрица может быть прямоугольный
+
+int[,] array = Create2DArray(5, 5, 1, 9);
+
+Print2DArray(array);
+
+GetSumElementsOnMainDiagonal(array);
+
+
+
+int[,] Create2DArray(int row, int col, int min, int max)
+{
+    int[,] array = new int[row, col];
+    Random random = new Random();
+    for (int i = 0; i < array.GetLength(0); i++)
+    {
+        for (int j = 0; j < array.GetLength(1); j++)
+        {
+            array[i, j] = random.Next(min, max + 1);
+        }
+    }
+    return array;
+}
+
+void Print2DArray(int[,] array)
+{
+    for (var i = 0; i < array.GetLength(0); i++)
+    {
+        for (var j = 0; j < array.GetLength(1); j++)
+        {
+            Console.Write(array[i, j] + " ");
+        }
+        Console.WriteLine();
+    }
+}
+
+void GetSumElementsOnMainDiagonal(int[,] array)
+{
+
+    int sum = 0;
+    for (int i = 0; i < array.GetLength(0) && i < array.GetLength(1); i++)
+    {
+        sum = sum + array[i, i];   // поскольку в данном случае матрица будет квадратной,
+    }                              // то i = j
+    Console.WriteLine($"Cумма элементов, находящихся на главной диагонали равна {sum}");
+}
+
+
+// Задача 47. Задайте двумерный массив размером m×n, заполненный случайными вещественными числами.
+// m = 3, n = 4.​
+// 0,5 7 -2 -0,2​
+// 1 -3,3 8 -9,9
+// 8 7,8 -7,1 9
+
+int rows = ReadInt("Введите количество строк: ");
+int colums = ReadInt("Введите количество столбцов: ");
+double[,] numbers = new double[rows, colums];
+FillArray2D(numbers);
+PrintArray2D(numbers);
+
+// Заполнение массива рандомными вещественными числами
+void FillArray2D(double[,] array)
+{
+    for (int i = 0; i < array.GetLength(0); i++)
+    {
+        for (int j = 0; j < array.GetLength(1); j++)
+        {
+            array[i, j] = new Random().Next(-99, 99) / 10.0;
+        }
+    }
+}
+
+//  Функция вывода массива в терминал
+void PrintArray2D(double[,] array)
+{
+    for (int i = 0; i < array.GetLength(0); i++)
+    {
+        for (int j = 0; j < array.GetLength(1); j++)
+        {
+            Console.Write(array[i, j] + " ");
+        }
+        Console.WriteLine();
+    }
     Console.WriteLine();
 }
 
-// Задача 36: Задайте одномерный массив, заполненный случайными числами. Найдите сумму элементов, стоящих на нечётных позициях.
-// [3, 7, 23, 12] -> 19
-// [-4, -6, 89, 6] -> 0
-
-Console.WriteLine("Введите размер массива  ");
-int size = Convert.ToInt32(Console.ReadLine());
-int[] numbers = new int[size];
-FillArrayRandomNumbers(numbers);
-Console.WriteLine("массив: ");
-PrintArray(numbers);
-int sum = 0;
-
-for (int z = 0; z < numbers.Length; z+=2)
-    sum = sum + numbers[z];
-
-    Console.WriteLine($"всего {numbers.Length} чисел, сумма элементов cтоящих на нечётных позициях = {sum}");
-
-void FillArrayRandomNumbers(int[] numbers)
+// Функция ввода 
+int ReadInt(string message)
 {
-    for(int i = 0; i < numbers.Length; i++)
-        {
-            numbers[i] = new Random().Next(1,10);
-        }
+    Console.Write(message);
+    return Convert.ToInt32(Console.ReadLine());
 }
-void PrintArray(int[] numbers)
+
+
+// Задача 50. Напишите программу, которая на вход принимает позиции элемента в двумерном массиве, и возвращает значение этого элемента или же указание, что такого элемента нет.
+// Например, задан массив:
+// 1 4 7 2
+// 5 9 2 3
+// 8 4 2 4​
+// 1 7 -> такого числа в массиве нет.
+
+int rows = ReadInt("Введите индекс строки: ");
+int colums = ReadInt("Введите индекс столбца: ");
+int[,] numbers = new int[6, 8];
+FillArray2D(numbers);
+PrintArray2D(numbers);
+
+if (rows < numbers.GetLength(0) && colums < numbers.GetLength(1)) Console.WriteLine(numbers[rows, colums]);
+else Console.WriteLine($"{rows}{colums} -> такого числа в массиве нет");
+
+
+// Заполнение массива рандомными числами от 1 до 9
+void FillArray2D(int[,] array)
 {
-    Console.Write("[ ");
-    for(int i = 0; i < numbers.Length; i++)
+    for (int i = 0; i < array.GetLength(0); i++)
+    {
+        for (int j = 0; j < array.GetLength(1); j++)
         {
-            Console.Write(numbers[i] + " ");
+            array[i, j] = new Random().Next(1, 10);
         }
-    Console.Write("]");
+    }
+}
+
+//  Функция вывода массива в терминал
+void PrintArray2D(int[,] array)
+{
+    for (int i = 0; i < array.GetLength(0); i++)
+    {
+        for (int j = 0; j < array.GetLength(1); j++)
+        {
+            Console.Write(array[i, j] + " ");
+        }
+        Console.WriteLine();
+    }
     Console.WriteLine();
 }
 
-
-// Задача 38: Задайте массив натуральных чисел. Найдите разницу между максимальным и минимальным элементов массива.
-// [3 7 22 2 78] -> 76
-
-Console.WriteLine("Введите размер массива  ");
-int size = Convert.ToInt32(Console.ReadLine());
-double[] numbers = new double[size];
-FillArrayRandomNumbers(numbers);
-Console.WriteLine("массив: ");
-PrintArray(numbers);
-double min = Int32.MaxValue;
-double max = Int32.MinValue;
-
-for (int z = 0; z < numbers.Length; z++)
+// Функция ввода 
+int ReadInt(string message)
 {
-    if (numbers[z] > max)
-        {
-            max = numbers[z];
-        }
-    if (numbers[z] < min)
-        {
-            min = numbers[z];
-        }
+    Console.Write(message);
+    return Convert.ToInt32(Console.ReadLine());
 }
 
-Console.WriteLine($"всего {numbers.Length} чисел. Максимальное значение = {max}, минимальное значение = {min}");
-Console.WriteLine($"Разница между максимальным и минимальным значением = {max - min}");
+// Задача 52. Задайте двумерный массив из целых чисел. Найдите среднее арифметическое элементов в каждом столбце.
+// Например, задан массив:
+// 1 4 7 2
+// 5 9 2 3
+// 8 4 2 4
+// Среднее арифметическое каждого столбца: 4,6; 5,6; 3,6; 3.
 
-void FillArrayRandomNumbers(double[] numbers)
+int rows = 3;
+int colums = 4;
+int[,] numbers = new int[rows, colums];
+FillArray2D(numbers);
+PrintArray2D(numbers);
+
+double[] avgNumbers = new double[numbers.GetLength(1)];
+
+for (int i = 0; i < numbers.GetLength(1); i++)
 {
-    for(int i = 0; i < numbers.Length; i++)
-        {
-            numbers[i] = Convert.ToDouble(new Random().Next(100,1000)) / 100;
-        }
+    double result = 0.0;
+    for (int j = 0; j < numbers.GetLength(0); j++)
+    {
+        result += numbers[j, i];
+    }
+    avgNumbers[i] = result / numbers.GetLength(0);
 }
-void PrintArray(double[] numbers)
+PrintArray(avgNumbers);
+
+
+// Заполнение массива рандомными вещественными числами
+void FillArray2D(int[,] array)
 {
-    Console.Write("[ ");
-    for(int i = 0; i < numbers.Length; i++)
+    for (int i = 0; i < array.GetLength(0); i++)
+    {
+        for (int j = 0; j < array.GetLength(1); j++)
         {
-            Console.Write(numbers[i] + " ");
+            array[i, j] = new Random().Next(1, 10);
         }
-    Console.Write("]");
+    }
+}
+
+//  Функция вывода двумерного массива в терминал
+void PrintArray2D(int[,] array)
+{
+    for (int i = 0; i < array.GetLength(0); i++)
+    {
+        for (int j = 0; j < array.GetLength(1); j++)
+        {
+            Console.Write(array[i, j] + " ");
+        }
+        Console.WriteLine();
+    }
     Console.WriteLine();
+}
+
+// Функция вывода массива в терминал 
+void PrintArray(double[] array)
+{
+    for (int i = 0; i < array.Length; i++)
+    {
+        Console.Write(array[i] + " ");
+    }
+    Console.WriteLine();
+}
+
+// Функция ввода 
+int ReadInt(string message)
+{
+    Console.Write(message);
+    return Convert.ToInt32(Console.ReadLine());
 }
