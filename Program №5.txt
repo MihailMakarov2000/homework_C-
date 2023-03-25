@@ -1,0 +1,744 @@
+// Задача 53: Задайте двумерный массив. Напишите программу, которая поменяет местами первую и последнюю строку массива.
+var array = new int[4, 4]
+            { { 1, 2, 3, 4 },
+              { 0, 0, 0, 0 },
+              { 0, 0, 0, 0 },
+              { 5, 6, 7, 8 }
+            };
+            for(int i = 0; i < array.GetLength(1); i++)
+            {
+                var tmp = array[3, i];
+                array[3, i] = array[0, i];
+                array[0, i] = tmp;
+            }
+            for(int i = 0; i < array.GetLength(0); i++)
+            {
+                for(int j = 0; j < array.GetLength(1); j++)
+                {
+                    Console.Write(array[i,j] + " ");
+                }
+                Console.WriteLine();
+            }
+            Console.ReadKey(true);
+
+
+// Задача 55: Задайте двумерный массив. Напишите программу, которая заменяет строки на столбцы. В случае, если это невозможно, программа должна вывести сообщение для пользователя.
+public class Replacement
+{
+    public static void Replace(int[,] table)
+    {
+        int mean = 0;
+        int row = table.GetLength(0);
+        int columns = table.GetLength(1);
+        if (row == columns)
+        {
+            for (int i = 0; i < row; i++)
+            {
+                for (int j = 0; j < columns; j++)
+                {
+                    mean = table[i, j];
+                    table[i, j] = table[j, i];
+                    table[j, i] = mean;
+                    Console.Write(table[i, j] + " ");
+                }
+                Console.WriteLine();
+            }
+        }
+        else Console.WriteLine("Замена невозможна!");
+    }
+
+    public static void PrintArray(int[] array)
+    {
+        int count = array.Length;
+        for (int i = 0; i < count; i++)
+        {
+            Console.Write($"{array[i]} ");
+        }
+        Console.WriteLine();
+    }
+}
+
+
+// Задача 57: Составить частотный словарь элементов двумерного массива. Частотный словарь содержит информацию о том, сколько раз встречается элемент входных данных.
+// 1, 2, 3
+// 4, 6, 1
+// 2, 1, 6
+
+// 1 встречается 3 раза
+// 2 встречается 2 раз
+// 3 встречается 1 раз
+// 4 встречается 1 раз
+// 6 встречается 2 раза
+// В нашей исходной матрице встречаются элементы от 0 до 9
+class Program
+{
+    /*   public struct FrequencyCollection
+      {
+        int Value = 0;
+        int Amount =0;  
+      } */
+    public static int GetExistedElementNumber(int[,] arrayToSeek, int arrayLength, int element)
+    {
+        int elementNumber = 0;
+        for (elementNumber = 0; elementNumber < arrayLength; elementNumber++)
+        {
+            if (arrayToSeek[elementNumber, 0] == element)
+            {
+                return elementNumber;
+            }
+        }
+        return -1;
+    }
+    public static void Reset2DArray(int[,] arrayToReset)
+    {
+        for (int i = 0; i < arrayToReset.GetLength(0); i++)
+        {
+            for (int j = 0; j < arrayToReset.GetLength(1); j++)
+            {
+                arrayToReset[i, j] = 0;
+            }
+        }
+    }
+    public static int[,] GetFreqCollection(int[,] arrayToSeek)
+    {
+        int[,] collection = new int[arrayToSeek.GetLength(0) * arrayToSeek.GetLength(1), 2];
+        Reset2DArray(collection);
+        int collectionLength = 1;
+        int existedElementNum = -2;
+        collection[0, 0] = arrayToSeek[0, 0];
+        for (int i = 0; i < arrayToSeek.GetLength(0); i++)
+        {
+            for (int j = 0; j < arrayToSeek.GetLength(1); j++)
+            {
+                existedElementNum = GetExistedElementNumber(collection, collectionLength, arrayToSeek[i, j]);
+                if (existedElementNum == -1)
+                {
+                    collection[collectionLength, 0] = arrayToSeek[i, j];
+                    collection[collectionLength, 1] += 1;
+                    collectionLength++;
+                }
+                else if (existedElementNum >= 0)
+                {
+                    collection[existedElementNum, 1] += 1;
+                }
+                // existedElementNum = -2;
+            }
+        }
+        return collection;
+    }
+    public static void PrintCollection(int[,] collectionToPrint)
+    {
+        Console.WriteLine();
+        for (int i = 0; i < collectionToPrint.GetLength(0); i++)
+        {
+            if (collectionToPrint[i, 1] > 0)
+            {
+                if (collectionToPrint[i, 1] >= 2 && collectionToPrint[i, 1] <= 4)
+                {
+                    Console.WriteLine("Число {0} встречается {1} раза.", collectionToPrint[i, 0], collectionToPrint[i, 1]);
+                }
+                else
+                {
+                    Console.WriteLine("Число {0} встречается {1} раз.", collectionToPrint[i, 0], collectionToPrint[i, 1]);
+                }
+            }
+        }
+    }
+    public static (int, int) GetArraySize()
+    {
+        int rowSize = 0;
+        int colSize = 0;
+        string enteredSymbol = string.Empty;
+        do
+        {
+            Console.Clear();
+            Console.Write("Создать случайный 2D массив? Нажмите y/n: ");
+            enteredSymbol = Console.ReadLine();
+            if (enteredSymbol == "y")
+            {
+                rowSize = new Random().Next(2, 11);
+                colSize = new Random().Next(2, 11);
+                Console.WriteLine("Значение m: {0}", rowSize);
+                Console.WriteLine("Значение n: {0}", colSize);
+                Console.WriteLine();
+                break;
+            }
+            else if (enteredSymbol == "n")
+            {
+                Console.Write("Введите значение m:");
+                rowSize = Convert.ToInt32(Console.ReadLine());
+                Console.Write("Введите значение n:");
+                colSize = Convert.ToInt32(Console.ReadLine());
+                break;
+            }
+        } while (true);
+
+        return (rowSize, colSize);
+    }
+    public static void Fill2DArray(int[,] ArrayToFill, int deviation = 10)
+    {
+        for (int i = 0; i < ArrayToFill.GetLength(0); i++)
+        {
+            for (int j = 0; j < ArrayToFill.GetLength(1); j++)
+            {
+                ArrayToFill[i, j] = new Random().Next(-deviation, deviation + 1);
+            }
+        }
+    }
+    public static void Print2DArray(int[,] ArrayToPrint, int coloredRow = -1)
+    {
+        Console.Write("[X]\t");
+        for (int i = 0; i < ArrayToPrint.GetLength(1); i++)
+        {
+            Console.Write($"[{i}]\t", i);
+        }
+        Console.WriteLine();
+        for (int i = 0; i < ArrayToPrint.GetLength(0); i++)
+        {
+            if (i == coloredRow)
+            {
+                Console.BackgroundColor = ConsoleColor.DarkBlue;
+            }
+            Console.Write($"[{i}]\t", i);
+            for (int j = 0; j < ArrayToPrint.GetLength(1); j++)
+            {
+                if (ArrayToPrint[i, j] < 0)
+                {
+                    Console.ForegroundColor = ConsoleColor.DarkRed;
+                }
+                Console.Write(ArrayToPrint[i, j] + "\t");
+                Console.ForegroundColor = ConsoleColor.White;
+            }
+            Console.ResetColor();
+            Console.WriteLine();
+        }
+    }
+    public static void Main(string[] args)
+    {
+        var (rowSize, colSize) = GetArraySize();
+        int[,] arrayToOperate = new int[rowSize, colSize];
+        Fill2DArray(arrayToOperate, deviation: 5);
+        Console.WriteLine("В сгенерированном массиве:");
+        Print2DArray(arrayToOperate);
+        int[,] freqCollection = new int[rowSize * colSize, 2];
+        Reset2DArray(freqCollection);
+        Console.WriteLine();
+        freqCollection = GetFreqCollection(arrayToOperate);
+        PrintCollection(freqCollection);
+    }
+
+}
+
+
+// Задача 59: Задайте двумерный массив из целых чисел. Напишите программу, которая удалит строку и столбец, на пересечении которых расположен наименьший элемент массива.
+// Например, задан массив:
+// 1 4 7 2
+// 5 9 2 3
+// 8 4 2 4
+// 5 2 6 7
+// Наименьший элемент - 1, на выходе получим
+// следующий массив:
+// 9 2 3
+// 4 2 4
+// 2 6 7
+
+
+int[,] array = new int[,]
+
+{
+
+    { 1, 4, 7 },
+
+    { 2, 5, 9 },
+
+    { 2, 3, 8 },
+
+    { 4, 2, 4 },
+
+    { 5, 2, 6 },
+
+    { 7, 9, 1 }
+
+};
+
+
+
+int min = array[0, 0];
+
+int minRow = 0;
+
+int minCol = 0;
+
+
+
+// Находим наименьший элемент в массиве и его индексы
+
+for (int i = 0; i < array.GetLength(0); i++)
+
+{
+
+    for (int j = 0; j < array.GetLength(1); j++)
+
+    {
+
+        if (array[i, j] < min)
+
+        {
+
+            min = array[i, j];
+
+            minRow = i;
+
+            minCol = j;
+
+        }
+
+    }
+
+}
+
+
+
+int[,] result = new int[array.GetLength(0) - 1, array.GetLength(1) - 1];
+
+int rowIndex = 0;
+
+int colIndex = 0;
+
+
+
+// Копируем элементы массива в новый массив, пропуская строку и столбец с наименьшим элементом
+
+for (int i = 0; i < array.GetLength(0); i++)
+
+{
+
+    if (i != minRow)
+
+    {
+
+        for (int j = 0; j < array.GetLength(1); j++)
+
+        {
+
+            if (j != minCol)
+
+            {
+
+                result[rowIndex, colIndex] = array[i, j];
+
+                colIndex++;
+
+            }
+
+        }
+
+        rowIndex++;
+
+        colIndex = 0;
+
+    }
+
+}
+
+
+
+// Выводим результат
+
+for (int i = 0; i < result.GetLength(0); i++)
+
+{
+
+    for (int j = 0; j < result.GetLength(1); j++)
+
+    {
+
+        Console.Write(result[i, j] + " ");
+
+    }
+
+    Console.WriteLine();
+
+}
+
+
+
+
+// Задача 61: Вывести первые N строк треугольника Паскаля. Сделать вывод в виде равнобедренного треугольника
+Console.WriteLine("Введите количество строк треугольника Паскаля:");
+int numberRows = int.Parse(Console.ReadLine());
+
+///Метод заполнения массива алгоритмом Паскаля:
+int [,] FillPascalArray (int numberRows)
+{
+    int rows = numberRows;
+    int columns = numberRows + 2;
+    int [,] array = new int [rows, columns];
+    array[0, 0 ] = 0;
+    array[0, 1 ] = 1;
+    array[0, 2 ] = 0;
+    for (int i = 1; i < array.GetLength(0); i++)
+    {
+        for (int j = 1; j < array.GetLength(1); j++)
+        {
+            array[i, j] = array[i - 1, j - 1] + array[i - 1, j];
+        }
+    }
+    return array;
+}
+
+
+///Метод печати массива Паскаля:
+void PrintPascalArray(int[,] array)
+{
+    for (int i = 0; i < array.GetLength(0); i++)
+        {
+            for (int k = array.GetLength(0); k > i; k--)
+            {
+                Console.Write("  ");
+            }
+            for (int j = 0; j < array.GetLength(1); j++)
+            {
+                Console.Write("{0,4}", array[i, j]);
+            }
+        Console.WriteLine();
+    }
+}
+
+int [,] array =  FillPascalArray(numberRows);
+Console.WriteLine();
+
+PrintPascalArray(array);
+
+
+
+// Задача 54: Задайте двумерный массив. Напишите программу, которая упорядочит по возрастанию элементы каждой строки двумерного массива.
+// Например, задан массив:
+// 1 4 7 2
+// 5 9 2 3
+// 8 4 2 4
+// В итоге получается вот такой массив:
+// 1 2 4 7
+// 2 3 5 9
+// 2 4 4 8
+int[,] table = new int[3, 4];
+FillArrayRandom(table);
+PrintArray(table);
+SortToLower(table);
+Console.WriteLine();
+PrintArray(table);
+
+void FillArrayRandom(int[,] array)
+{
+    for (int i = 0; i < array.GetLength(0); i++)
+    {
+        for (int j = 0; j < array.GetLength(1); j++)
+        {
+            array[i, j] = new Random().Next(1, 10);
+        }
+    }
+}
+
+void SortToLower(int[,] array)
+{
+    for (int i = 0; i < array.GetLength(0); i++)
+    {
+        for (int j = 0; j < array.GetLength(1); j++)
+        {
+            for (int k = 0; k < array.GetLength(1) - 1; k++)
+            {
+                if (array[i, k] < array[i, k + 1])
+                {
+                    int temp = array[i, k + 1];
+                    array[i, k + 1] = array[i, k];
+                    array[i, k] = temp;
+                }
+            }
+        }
+    }
+}
+
+void PrintArray(int[,] array)
+{
+    for (int i = 0; i < array.GetLength(0); i++)
+    {
+        for (int j = 0; j < array.GetLength(1); j++)
+        {
+            Console.Write($"{array[i, j]} ");
+        }
+        Console.WriteLine();
+    }
+}
+
+
+
+// Задача 56: Задайте прямоугольный двумерный массив. Напишите программу, которая будет находить строку с наименьшей суммой элементов.
+// Например, задан массив:
+// 1 4 7 2 
+// 5 9 2 3
+// 8 4 2 4
+// 5 2 6 7
+// Программа считает сумму элементов в каждой строке и выдаёт номер строки с наименьшей суммой элементов: 1 строка
+
+int[,] table = new int[4, 4];
+FillArrayRandom(table);
+PrintArray(table);
+Console.WriteLine();
+NumberRowMinSumElements(table);
+
+
+void NumberRowMinSumElements(int[,] array)
+{
+    int minRow = 0;
+    int minSumRow = 0;
+    int sumRow = 0;
+    for (int i = 0; i < table.GetLength(1); i++)
+    {
+        minRow += table[0, i];
+    }
+    for (int i = 0; i < table.GetLength(0); i++)
+    {
+        for (int j = 0; j < table.GetLength(1); j++) sumRow += table[i, j];
+        if (sumRow < minRow)
+        {
+            minRow = sumRow;
+            minSumRow = i;
+        }
+        sumRow = 0;
+    }
+    Console.Write($"{minSumRow + 1} строка");
+}
+
+// Функция вывода двумерного массива
+void PrintArray(int[,] array)
+{
+    for (int i = 0; i < array.GetLength(0); i++)
+    {
+        for (int j = 0; j < array.GetLength(1); j++)
+        {
+            Console.Write($"{array[i, j]} ");
+        }
+        Console.WriteLine();
+    }
+}
+
+void FillArrayRandom(int[,] array)
+{
+    for (int i = 0; i < array.GetLength(0); i++)
+    {
+        for (int j = 0; j < array.GetLength(1); j++)
+        {
+            array[i, j] = new Random().Next(1, 10);
+        }
+    }
+}
+
+
+// Задача 58: Задайте две матрицы. Напишите программу, которая будет находить произведение двух матриц.
+// Например, заданы 2 массива:
+// 1 4 7 2
+// 5 9 2 3
+// 8 4 2 4
+// 5 2 6 7
+// и
+// 1 5 8 5
+// 4 9 4 2
+// 7 2 2 6
+// 2 3 4 7
+// Их произведение будет равно следующему массиву:
+// 1 20 56 10
+// 20 81 8 6
+// 56 8 4 24
+// 10 6 24 4
+
+Console.WriteLine("Введите размеры матриц и диапазон случайных значений:");
+int m = InputNumbers("Введите число строк 1-й матрицы: ");
+int n = InputNumbers("Введите число столбцов 1-й матрицы (и строк 2-й): ");
+int p = InputNumbers("Введите число столбцов 2-й матрицы: ");
+int range = InputNumbers("Введите диапазон случайных чисел: от 1 до ");
+
+int[,] firstMartrix = new int[m, n];
+CreateArray(firstMartrix);
+Console.WriteLine($"Первая матрица:");
+WriteArray(firstMartrix);
+
+int[,] secomdMartrix = new int[n, p];
+CreateArray(secomdMartrix);
+Console.WriteLine($"Вторая матрица:");
+WriteArray(secomdMartrix);
+
+int[,] resultMatrix = new int[m,p];
+
+MultiplyMatrix(firstMartrix, secomdMartrix, resultMatrix);
+Console.WriteLine($"Произведение первой и второй матриц:");
+WriteArray(resultMatrix);
+
+void MultiplyMatrix(int[,] firstMartrix, int[,] secomdMartrix, int[,] resultMatrix)
+{
+  for (int i = 0; i < resultMatrix.GetLength(0); i++)
+  {
+    for (int j = 0; j < resultMatrix.GetLength(1); j++)
+    {
+      int sum = 0;
+      for (int k = 0; k < firstMartrix.GetLength(1); k++)
+      {
+        sum += firstMartrix[i,k] * secomdMartrix[k,j];
+      }
+      resultMatrix[i,j] = sum;
+    }
+  }
+}
+
+int InputNumbers(string input)
+{
+  Console.Write(input);
+  int output = Convert.ToInt32(Console.ReadLine());
+  return output;
+}
+
+void CreateArray(int[,] array)
+{
+  for (int i = 0; i < array.GetLength(0); i++)
+  {
+    for (int j = 0; j < array.GetLength(1); j++)
+    {
+      array[i, j] = new Random().Next(range);
+    }
+  }
+}
+
+void WriteArray (int[,] array)
+{
+  for (int i = 0; i < array.GetLength(0); i++)
+  {
+    for (int j = 0; j < array.GetLength(1); j++)
+    {
+      Console.Write(array[i,j] + " ");
+    }
+    Console.WriteLine();
+  }
+}
+
+
+// Задача 60. Сформируйте трёхмерный массив из неповторяющихся двузначных чисел. Напишите программу, которая будет построчно выводить массив, добавляя индексы каждого элемента.
+// массив размером 2 x 2 x 2
+// 12(0,0,0) 22(0,0,1)
+// 45(1,0,0) 53(1,0,1
+
+Console.WriteLine($"Введите размер массива X x Y x Z: ");
+int x = InputNumbers("Введите X: ");
+int y = InputNumbers("Введите Y: ");
+int z = InputNumbers("Введите Z: ");
+Console.WriteLine($"");
+
+int[,,] array3D = new int[x, y, z];
+CreateArray(array3D);
+WriteArray(array3D);
+
+int InputNumbers(string input)
+{
+  Console.Write(input);
+  int output = Convert.ToInt32(Console.ReadLine());
+  return output;
+}
+
+void WriteArray (int[,,] array3D)
+{
+  for (int i = 0; i < array3D.GetLength(0); i++)
+  {
+    for (int j = 0; j < array3D.GetLength(1); j++)
+    {
+      Console.Write($"X({i}) Y({j}) ");
+      for (int k = 0; k < array3D.GetLength(2); k++)
+      {
+        Console.Write( $"Z({k})={array3D[i,j,k]}; ");
+      }
+      Console.WriteLine();
+    }
+    Console.WriteLine();
+  }
+}
+
+void CreateArray(int[,,] array3D)
+{
+  int[] temp = new int[array3D.GetLength(0) * array3D.GetLength(1) * array3D.GetLength(2)];
+  int  number;
+  for (int i = 0; i < temp.GetLength(0); i++)
+  {
+    temp[i] = new Random().Next(10, 100);
+    number = temp[i];
+    if (i >= 1)
+    {
+      for (int j = 0; j < i; j++)
+      {
+        while (temp[i] == temp[j])
+        {
+          temp[i] = new Random().Next(10, 100);
+          j = 0;
+          number = temp[i];
+        }
+          number = temp[i];
+      }
+    }
+  }
+  int count = 0; 
+  for (int x = 0; x < array3D.GetLength(0); x++)
+  {
+    for (int y = 0; y < array3D.GetLength(1); y++)
+    {
+      for (int z = 0; z < array3D.GetLength(2); z++)
+      {
+        array3D[x, y, z] = temp[count];
+        count++;
+      }
+    }
+  }
+}
+
+
+
+// Задача 62. Заполните спирально массив 4 на 4.
+// Например, на выходе получается вот такой массив:
+// 1 2 3 4
+// 12 13 14 5
+// 11 16 15 6
+// 10 9 8 7
+
+int n = 4;
+int[,] sqareMatrix = new int[n, n];
+
+int temp = 1;
+int i = 0;
+int j = 0;
+
+while (temp <= sqareMatrix.GetLength(0) * sqareMatrix.GetLength(1))
+{
+  sqareMatrix[i, j] = temp;
+  temp++;
+  if (i <= j + 1 && i + j < sqareMatrix.GetLength(1) - 1)
+    j++;
+  else if (i < j && i + j >= sqareMatrix.GetLength(0) - 1)
+    i++;
+  else if (i >= j && i + j > sqareMatrix.GetLength(1) - 1)
+    j--;
+  else
+    i--;
+}
+
+WriteArray(sqareMatrix);
+
+void WriteArray (int[,] array)
+{
+  for (int i = 0; i < array.GetLength(0); i++)
+  {
+    for (int j = 0; j < array.GetLength(1); j++)
+    {
+      if (array[i,j] / 10 <= 0)
+      Console.Write($" {array[i,j]} ");
+
+      else Console.Write($"{array[i,j]} ");
+    }
+    Console.WriteLine();
+  }
+}
+
