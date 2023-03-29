@@ -1,0 +1,213 @@
+// Задача 63: Задайте значение N. Напишите программу, которая выведет все натуральные числа в промежутке от 1 до N.
+// N = 5 -> "1, 2, 3, 4, 5"
+// N = 6 -> "1, 2, 3, 4, 5, 6
+
+Console.Clear();
+int n=GetNumberFromUser($"Введите число ", "Ошибка ввода!");  //  вызов метода
+string result = GetResult(1, n);
+Console.Write(result);
+
+
+int GetNumberFromUser(string message, string errorMessage)
+{
+    while (true)
+    {
+        Console.Write(message);
+        bool isCorrect = int.TryParse(Console.ReadLine(), out int userNumber);
+        if (isCorrect)
+            return userNumber;
+        Console.WriteLine(errorMessage);
+    }
+}
+
+string GetResult (int start, int end)
+{
+    if(start == end) return end.ToString();
+    else return start + " " + GetResult(start +1, end);
+}
+
+
+// Задача 65: Задайте значения M и N. Напишите программу, которая выведет все натуральные 
+// числа в промежутке от M до N.
+// M = 1; N = 5 -> "1, 2, 3, 4, 5"
+//  M = 4; N = 8 -> "4, 6, 7, 8"
+
+PrintDigitsInterval(1, 5);
+
+Console.WriteLine();
+
+
+void PrintDigitsInterval(int a, int m)
+{
+    Console.Write(a + ", ");
+    if (a < m)
+        PrintDigitsInterval(a + 1, m);
+}
+
+
+// Задача 67: Напишите программу, которая будет принимать на вход число и возвращать сумму его цифр.
+// 453 -> 12
+// 45 -> 9
+
+
+Console.Clear();
+int n = GetNumberFromUser($"Введите число ", "Ошибка ввода!");  //  вызов метода
+int result = GetResult(n);
+Console.Write($"{n} -> {result}");
+
+
+int GetNumberFromUser(string message, string errorMessage)
+{
+    while (true)
+    {
+        Console.Write(message);
+        bool isCorrect = int.TryParse(Console.ReadLine(), out int userNumber);
+        if (isCorrect)
+            return userNumber;
+        Console.WriteLine(errorMessage);
+    }
+}
+
+int GetResult(int n)
+{
+    if (n == 0) return 0;
+    else
+    {
+        
+        GetResult(n - 1);
+        return n%10 + GetResult(n/10);
+    }
+}
+
+
+
+
+// Задача 69: Напишите программу, которая на вход принимает два числа A и B, и возводит число А в целую степень B с помощью рекурсии.
+// A = 3; B = 5 -> 243 (3⁵)
+// A = 2; B = 3 -> 8
+
+Console.Clear();
+int a = GetNumberFromUser($"Введите число ", "Ошибка ввода!");  //  вызов метода
+int b = GetNumberFromUser($"Введите число ", "Ошибка ввода!");  //  вызов метода
+int result = GetResult(a, b);
+Console.Write($"A = {a}; B = {b} -> {result}");
+
+
+int GetNumberFromUser(string message, string errorMessage)
+{
+    while (true)
+    {
+        Console.Write(message);
+        bool isCorrect = int.TryParse(Console.ReadLine(), out int userNumber);
+        if (isCorrect)
+            return userNumber;
+        Console.WriteLine(errorMessage);
+    }
+}
+
+int GetResult(int a, int b)
+{
+    if (b == 1) return a;
+    {
+        return a*GetResult(a, b-1);
+    }
+}
+
+
+
+
+
+// Задача 64: Задайте значения N. Напишите программу, которая выведет все натуральные числа в промежутке от N до 1.
+//  N = 5. -> "5, 4, 3, 2, 1"
+//  N = 8. -> "8, 7, 6, 5, 4, 3, 2, 1"
+//  */
+ 
+Console.Write("Введите число: ");
+int number = Convert.ToInt32(Console.ReadLine());
+int count = 1;
+NaturalToLow(number, count);
+
+
+void NaturalToLow(int n, int count)
+{
+    if (count > n)
+    {
+        return;
+    }
+    else
+    {
+        NaturalToLow(n, count + 1);
+        Console.Write(count + " ");
+    }
+}
+
+
+
+
+// Задача 66: Задайте значения M и N. Напишите программу, которая найдёт сумму натуральных элементов в промежутке от M до N.
+//  M = 1; N = 15 -> 120
+//  M = 4; N = 8. -> 30
+//  */
+ 
+Console.Write("Введите число M: ");
+int m = Convert.ToInt32(Console.ReadLine());
+
+Console.Write("Введите число N: ");
+int n = Convert.ToInt32(Console.ReadLine());
+
+SumFromMToN(m, n);
+
+void SumFromMToN(int m, int n)
+{
+    Console.Write(SumMN(m - 1, n));
+}
+
+int SumMN(int m, int n)
+{
+    int res = m;
+    if (m == n)
+        return 0;
+    else
+    {
+        m++;
+        res = m + SumMN(m, n);
+        return res;
+    }
+}
+
+
+
+
+// Задача 68: Напишите программу вычисления функции Аккермана с помощью рекурсии. Даны два неотрицательных числа m и n.
+//  m = 2, n = 3 -> A(m,n) = 9
+//  m = 3, n = 2 -> A(m,n) = 29
+ 
+Console.Write("Введите число M: ");
+int m = Convert.ToInt32(Console.ReadLine());
+
+Console.Write("Введите число N: ");
+int n = Convert.ToInt32(Console.ReadLine());
+
+AkkermanFunction(m,n);
+
+
+void AkkermanFunction(int m, int n)
+{
+    Console.Write(Akkerman(m, n)); 
+}
+
+int Akkerman(int m, int n)
+{
+    if (m == 0)
+    {
+        return n + 1;
+    }
+    else if (n == 0 && m > 0)
+    {
+        return Akkerman(m - 1, 1);
+    }
+    else
+    {
+        return (Akkerman(m - 1, Akkerman(m, n - 1)));
+    }
+}
